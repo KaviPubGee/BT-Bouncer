@@ -21,7 +21,7 @@ An open-source, battery-optimized Android Bluetooth gatekeeper that gives you to
 
 ## Why BT Bouncer?
 
-Modern Bluetooth devices are stubborn. Your car stereo, desktop speakers, smartwatches, or gym headphones constantly compete to hijack your phone's audio output the second they enter range. 
+Modern Bluetooth devices are stubborn. Your car stereo, desktop speakers, smartwatches, or gym headphones constantly competing to hijack your phone's audio output the second they enter range. 
 
 Android only gives you two extremes:
 1. **Stay connected** and let other devices hijack your audio or notifications.
@@ -56,9 +56,12 @@ Android only gives you two extremes:
 
 <div align="center">
 
-| Devices View | Automated Routines | Interactive Geofence Map |
-| :---: | :---: | :---: |
-| <img src="docs/media/screen_devices.png" width="260" alt="Devices Screen" onerror="this.src='docs/media/logo.png';this.width=140" /> | <img src="docs/media/screen_routines.png" width="260" alt="Routines Screen" onerror="this.src='docs/media/logo.png';this.width=140" /> | <img src="docs/media/screen_map.png" width="260" alt="Map Picker" onerror="this.src='docs/media/logo.png';this.width=140" /> |
+<img width="275" height="500" alt="WhatsApp Image 2026-10-08 at 00 49 01" src="https://github.com/user-attachments/assets/91db8567-bb11-45f1-946c-8bff28a4866b" />
+
+<img width="275" height="500" alt="WhatsApp Image 2026-10-08 at 00 49 00" src="https://github.com/user-attachments/assets/78cae0be-e308-44d4-ad7a-377097d82468" />
+
+<img width="275" height="500" alt="WhatsApp Image 2026-10-08 at 00 49 00 (1)" src="https://github.com/user-attachments/assets/96469a54-74ff-4b90-a773-36d3a2b57dc7" />
+
 
 </div>
 
