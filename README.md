@@ -9,6 +9,7 @@
 An open-source, battery-optimized Android Bluetooth gatekeeper that gives you total VIP control over your connected devices. Block or drop unwanted Bluetooth connections automatically — based on customizable multi-device priorities, location geofences, or home screen widget toggles — without ever unpairing them.
 
 [![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B%20(API%2026%2B)-3DDC84?logo=android&logoColor=white)](https://developer.android.com)
+[![Platform](https://img.shields.io/badge/Platform-Android%20Only-3DDC84?logo=android&logoColor=white)](https://developer.android.com)
 [![Target SDK](https://img.shields.io/badge/Target%20SDK-15%20%2F%2016%20(API%2035%2B)-black?logo=android)](https://developer.android.com)
 [![Kotlin 2.0](https://img.shields.io/badge/Kotlin-2.0%2B-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org)
 [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
@@ -29,6 +30,8 @@ Android only gives you two extremes:
 
 > **BT Bouncer gives you the third option: The VIP Velvet Rope.**  
 > Toggle devices on or off like a switch. When turned off, incoming handshakes are dropped immediately across all Bluetooth profiles without removing the bond. Turn them back on anytime with a single tap.
+
+> **Note:** Android only. Apple doesn't allow third-party apps this level of Bluetooth control, so an iOS version isn't possible.
 
 ---
 
