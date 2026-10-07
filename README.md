@@ -1,8 +1,8 @@
 <div align="center">
+  
+<img width="128" alt="Bluetooth Bouncer" src="https://github.com/user-attachments/assets/e6bd831c-3190-4017-9055-a624d3999089" />
 
-<img src="docs/media/logo.png" width="128" alt="BT Bouncer Logo" />
-
-# BT Bouncer 🥊
+# BT Bouncer 
 
 **VIP access only. Choose who gets in.**
 
@@ -19,7 +19,7 @@ An open-source, battery-optimized Android Bluetooth gatekeeper that gives you to
 
 ---
 
-## 🧐 Why BT Bouncer?
+## Why BT Bouncer?
 
 Modern Bluetooth devices are stubborn. Your car stereo, desktop speakers, smartwatches, or gym headphones constantly compete to hijack your phone's audio output the second they enter range. 
 
@@ -32,27 +32,27 @@ Android only gives you two extremes:
 
 ---
 
-## ✨ Features
+## Features
 
-- 🛡️ **VIP Bluetooth Filtering** — Block and drop connections on-demand without unpairing. Reconnect cleanly whenever you want.
-- 🎧 **Universal Multi-Profile Support** — Drops handshakes across all major profiles:
+- **VIP Bluetooth Filtering** — Block and drop connections on-demand without unpairing. Reconnect cleanly whenever you want.
+- **Universal Multi-Profile Support** — Drops handshakes across all major profiles:
   - `A2DP` (Media audio, headphones, cars, soundbars)
   - `HEADSET` / `HFP` (Handsfree calls)
   - `HID_HOST` (Keyboards, mice, gamepads, watch navigation)
   - `PAN` (Personal Area Networks / smartwatch data sync)
   - `LE Audio` & `Hearing Aid`
   - `GATT` / `BLE` (Smartwatches, fitness bands, and trackers)
-- ⚡ **Interactive Home Screen Widget** — Control your top 5 Bluetooth devices with live battery / connection statuses right from your home screen.
-- 🔄 **Conditional Routines** — Set automated device rules:
+- **Interactive Home Screen Widget** — Control your top 5 Bluetooth devices with live battery / connection statuses right from your home screen.
+- **Conditional Routines** — Set automated device rules:
   - *When my headphones connect, automatically drop the car stereo and home speakers.*
   - *When my smartwatch connects, prioritize my wireless earbuds.*
-- 📍 **Geofenced Locations** — Drop a pin on an interactive map. Automatically allow or silence selected devices when you arrive at work, home, or the gym.
-- 🔋 **Zero-Drain Architecture** — Uses passive, cached system locations (`getLastKnownLocation`) and reactive Bluetooth broadcast receivers. Zero continuous polling loops or background battery drain.
-- 🖤 **AMOLED Pure Black & Emerald UI** — Deep `#000000` AMOLED canvas accented with glowing `#00BF63` emerald green and Material 3 expressiveness.
+- **Geofenced Locations** — Drop a pin on an interactive map. Automatically allow or silence selected devices when you arrive at work, home, or the gym.
+- **Zero-Drain Architecture** — Uses passive, cached system locations (`getLastKnownLocation`) and reactive Bluetooth broadcast receivers. Zero continuous polling loops or background battery drain.
+- **AMOLED Pure Black & Emerald UI** — Deep `#000000` AMOLED canvas accented with glowing `#00BF63` emerald green and Material 3 expressiveness.
 
 ---
 
-## 📱 Screenshots
+## Screenshots
 
 <div align="center">
 
@@ -64,7 +64,7 @@ Android only gives you two extremes:
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## Tech Stack & Architecture
 
 ```
 BT Bouncer
@@ -93,7 +93,7 @@ BT Bouncer
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - [Android Studio Ladybug | 2024.2+](https://developer.android.com/studio) or newer
@@ -115,7 +115,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ---
 
-## 🔒 Permissions Breakdown
+## Permissions Breakdown
 
 Privacy and battery efficiency come first. BT Bouncer never asks for unnecessary permissions:
 
@@ -130,7 +130,7 @@ Privacy and battery efficiency come first. BT Bouncer never asks for unnecessary
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, bug reports, and suggestions are welcome!
 
@@ -142,6 +142,6 @@ Contributions, bug reports, and suggestions are welcome!
 
 ---
 
-## ⚖️ License
+## License
 
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for full details.
+Distributed under the **GNU General Public License v3.0**. See [`LICENSE`](LICENSE) for full details.
