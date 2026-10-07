@@ -13,7 +13,7 @@ An open-source, battery-optimized Android Bluetooth gatekeeper that gives you to
 [![Kotlin 2.0](https://img.shields.io/badge/Kotlin-2.0%2B-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org)
 [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
 [![AMOLED](https://img.shields.io/badge/Theme-AMOLED%20Pure%20Black-000000?style=flat&logoColor=00BF63)](https://github.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-00BF63.svg)](LICENSE)
+[![License: GPLv3](https://img.shields.io/badge/License-GPLv3-00BF63.svg)](LICENSE)
 
 </div>
 
@@ -29,6 +29,25 @@ Android only gives you two extremes:
 
 > **BT Bouncer gives you the third option: The VIP Velvet Rope.**  
 > Toggle devices on or off like a switch. When turned off, incoming handshakes are dropped immediately across all Bluetooth profiles without removing the bond. Turn them back on anytime with a single tap.
+
+---
+
+## Download
+
+<div align="center">
+
+### [⬇ Download Latest APK](https://github.com/YOUR_USERNAME/BT-Bouncer/releases/latest)
+
+</div>
+
+No Play Store, no tracking, no ads — just grab the APK and sideload it.
+
+1. Head to the [**Releases**](https://github.com/KaviPubGee/BT-Bouncer/releases/tag/v1.0.0) page
+2. Download the latest `.apk` file
+3. Enable "Install from unknown sources" if prompted
+4. Install and grant Bluetooth permissions on first launch
+
+> Want to build it yourself instead? See [Getting Started](#getting-started) below.
 
 ---
 
