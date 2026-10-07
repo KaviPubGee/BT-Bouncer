@@ -35,17 +35,13 @@ class BtConnectionReceiver : BroadcastReceiver() {
 
         if (device == null) return
 
-        val isDisconnect = when (action) {
-            BluetoothDevice.ACTION_ACL_DISCONNECTED -> true
-            BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED -> {
+        val isDisconnect = when {
+            action == BluetoothDevice.ACTION_ACL_DISCONNECTED -> true
+            action == BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED -> {
                 val state = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, -1)
                 state == BluetoothAdapter.STATE_DISCONNECTED
             }
-            "android.bluetooth.pan.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.hidhost.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.a2dp.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.action.LE_AUDIO_CONNECTION_STATE_CHANGED" -> {
+            action.contains("CONNECTION_STATE_CHANGED", ignoreCase = true) -> {
                 val state = intent.getIntExtra(BluetoothProfile.EXTRA_STATE, -1)
                 state == BluetoothProfile.STATE_DISCONNECTED
             }
@@ -59,17 +55,13 @@ class BtConnectionReceiver : BroadcastReceiver() {
         }
 
         // Only enforce disconnection/routine rules when device is actually CONNECTING or CONNECTED
-        val isConnectEvent = when (action) {
-            BluetoothDevice.ACTION_ACL_CONNECTED -> true
-            BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED -> {
+        val isConnectEvent = when {
+            action == BluetoothDevice.ACTION_ACL_CONNECTED -> true
+            action == BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED -> {
                 val state = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, -1)
                 state == BluetoothAdapter.STATE_CONNECTED || state == BluetoothAdapter.STATE_CONNECTING
             }
-            "android.bluetooth.pan.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.hidhost.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.a2dp.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED",
-            "android.bluetooth.action.LE_AUDIO_CONNECTION_STATE_CHANGED" -> {
+            action.contains("CONNECTION_STATE_CHANGED", ignoreCase = true) -> {
                 val state = intent.getIntExtra(BluetoothProfile.EXTRA_STATE, -1)
                 state == BluetoothProfile.STATE_CONNECTED || state == BluetoothProfile.STATE_CONNECTING
             }

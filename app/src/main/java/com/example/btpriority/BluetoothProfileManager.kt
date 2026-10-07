@@ -29,18 +29,9 @@ class BluetoothProfileManager(private val context: Context) {
     private val activeProxies = mutableMapOf<Int, BluetoothProfile>()
 
     // Core profile IDs to maintain persistent proxies for
-    private val targetProfiles = listOf(
-        BluetoothProfile.HEADSET,       // 1: Headset / Calls
-        BluetoothProfile.A2DP,          // 2: Media Audio (Headphones, Speakers, Car)
-        4,                              // 4: HID_HOST (Keyboards, Mice, Watch controls)
-        5,                              // 5: PAN (Tethering, Smartwatch sync)
-        6,                              // 6: PBAP (Phonebook Access)
-        9,                              // 9: MAP (Message Access)
-        17,                             // 17: PBAP_CLIENT
-        18,                             // 18: MAP_CLIENT
-        21,                             // 21: Hearing Aid
-        22                              // 22: LE Audio
-    )
+    // 1: Headset, 2: A2DP, 4: HID_HOST, 5: PAN, 6: PBAP, 9: MAP, 10: SAP,
+    // 17: PBAP_CLIENT, 18: MAP_CLIENT, 21: Hearing Aid, 22: LE Audio, 25: CSIS
+    private val targetProfiles = listOf(1, 2, 4, 5, 6, 9, 10, 17, 18, 21, 22, 25)
 
     init {
         bindProxies()
@@ -98,14 +89,14 @@ class BluetoothProfileManager(private val context: Context) {
 
     @SuppressLint("MissingPermission")
     private fun executeProfileDisconnection(device: BluetoothDevice) {
-        // 1. Direct device.disconnect() reflection (if present on OEM framework)
+        // 1. Direct device.disconnect() reflection (supported on Android 11+ AOSP & Samsung One UI)
         try {
             val method = device.javaClass.getMethod("disconnect")
             method.isAccessible = true
             method.invoke(device)
         } catch (_: Exception) {}
 
-        // 2. Direct iBluetooth service reflection
+        // 2. Direct iBluetooth service reflection (adapter -> mService -> disconnect(BluetoothDevice) / disconnectAll(BluetoothDevice))
         try {
             val btAdapter = adapter
             if (btAdapter != null) {
@@ -114,12 +105,16 @@ class BluetoothProfileManager(private val context: Context) {
                 val iBluetooth = mServiceField.get(btAdapter)
                 if (iBluetooth != null) {
                     for (m in iBluetooth.javaClass.methods) {
-                        if (m.name.contains("disconnect", ignoreCase = true) &&
-                            m.parameterTypes.size == 1 &&
-                            m.parameterTypes[0] == BluetoothDevice::class.java
+                        if (m.name.equals("disconnect", ignoreCase = true) ||
+                            m.name.equals("disconnectAll", ignoreCase = true) ||
+                            m.name.equals("disconnectDevice", ignoreCase = true)
                         ) {
-                            m.isAccessible = true
-                            m.invoke(iBluetooth, device)
+                            try {
+                                if (m.parameterTypes.size == 1 && m.parameterTypes[0] == BluetoothDevice::class.java) {
+                                    m.isAccessible = true
+                                    m.invoke(iBluetooth, device)
+                                }
+                            } catch (_: Exception) {}
                         }
                     }
                 }
@@ -127,11 +122,40 @@ class BluetoothProfileManager(private val context: Context) {
         } catch (_: Exception) {}
 
         // 3. Forbid connection policy and disconnect on all bound profile proxies
+        // (A2DP, Headset, HID_HOST, PAN, PBAP, MAP, LE Audio, Hearing Aid, etc.)
         synchronized(activeProxies) {
             for ((profileId, proxy) in activeProxies) {
                 setProxyForbidden(proxy, device, profileId)
             }
         }
+
+        // 4. Force disconnect via GATT if this is a BLE / Wearable / Smartwatch connection
+        disconnectGattDevice(device)
+    }
+
+    /**
+     * Terminate active BLE / GATT connections (used by smartwatches, fitness bands, trackers, etc.)
+     */
+    @SuppressLint("MissingPermission")
+    private fun disconnectGattDevice(device: BluetoothDevice) {
+        try {
+            // Attempt to connect briefly to obtain a BluetoothGatt handle then immediately disconnect & close
+            val gatt = device.connectGatt(
+                context,
+                false,
+                object : android.bluetooth.BluetoothGattCallback() {
+                    override fun onConnectionStateChange(gatt: android.bluetooth.BluetoothGatt?, status: Int, newState: Int) {
+                        try {
+                            gatt?.disconnect()
+                            gatt?.close()
+                        } catch (_: Exception) {}
+                    }
+                },
+                BluetoothDevice.TRANSPORT_AUTO
+            )
+            gatt?.disconnect()
+            gatt?.close()
+        } catch (_: Exception) {}
     }
 
     @SuppressLint("MissingPermission")
@@ -208,24 +232,52 @@ class BluetoothProfileManager(private val context: Context) {
             method.invoke(proxy, device, PRIORITY_ON)
         } catch (_: Exception) {}
 
-        // Call connect only on supported profiles (A2DP and Headset)
-        if (profileId == BluetoothProfile.A2DP || profileId == BluetoothProfile.HEADSET) {
-            try {
-                val method = proxy.javaClass.getMethod("connect", BluetoothDevice::class.java)
-                method.isAccessible = true
-                method.invoke(proxy, device)
-            } catch (_: Exception) {}
-        }
+        // Call connect on proxy
+        try {
+            val method = proxy.javaClass.getMethod("connect", BluetoothDevice::class.java)
+            method.isAccessible = true
+            method.invoke(proxy, device)
+        } catch (_: Exception) {}
     }
 
     @SuppressLint("MissingPermission")
     fun isDeviceConnected(device: BluetoothDevice): Boolean {
-        return try {
+        // 1. Check device.isConnected() hidden API
+        try {
             val method = device.javaClass.getMethod("isConnected")
-            method.invoke(device) as Boolean
-        } catch (_: Exception) {
-            false
+            if (method.invoke(device) as? Boolean == true) return true
+        } catch (_: Exception) {}
+
+        // 2. Check all active profile proxies (HID, PAN, A2DP, HEADSET, LE Audio, etc.)
+        synchronized(activeProxies) {
+            for ((_, proxy) in activeProxies) {
+                try {
+                    val state = proxy.getConnectionState(device)
+                    if (state == BluetoothProfile.STATE_CONNECTED) return true
+                } catch (_: Exception) {}
+            }
         }
+
+        // 3. Check BluetoothManager connected devices across common profiles
+        val bm = bluetoothManager
+        if (bm != null) {
+            val profilesToCheck = intArrayOf(
+                BluetoothProfile.GATT,
+                BluetoothProfile.GATT_SERVER,
+                BluetoothProfile.HEADSET,
+                BluetoothProfile.A2DP
+            )
+            for (p in profilesToCheck) {
+                try {
+                    val connectedGatt = bm.getConnectedDevices(p)
+                    if (connectedGatt.any { it.address.equals(device.address, ignoreCase = true) }) {
+                        return true
+                    }
+                } catch (_: Exception) {}
+            }
+        }
+
+        return false
     }
 
     @SuppressLint("MissingPermission")
