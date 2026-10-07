@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- App Vibrant Emerald Green (#00BF63) Palette on Pure Black -->
+    <!-- App Background & Card Surfaces -->
+    <color name="widget_bg_dark">#000000</color>
+    <color name="widget_card_bg_dark">#0F0F0F</color>
+    <color name="widget_outline">#222222</color>
+    <color name="widget_divider">#1A1A1A</color>
+
+    <!-- Vibrant Emerald Green Accents (#00BF63) -->
+    <color name="widget_primary">#00BF63</color>
+    <color name="widget_on_primary">#003919</color>
+    <color name="widget_primary_container">#0A3320</color>
+    <color name="widget_on_primary_container">#6BFFB2</color>
+    
+    <!-- Text Colors -->
+    <color name="widget_on_surface">#F0F0F0</color>
+    <color name="widget_on_surface_variant">#A0A0A0</color>
+
+    <!-- Toggle ON / OFF Colors -->
+    <color name="widget_toggle_on_bg">#00BF63</color>
+    <color name="widget_toggle_on_text">#003919</color>
+    <color name="widget_toggle_off_bg">#222222</color>
+    <color name="widget_toggle_off_text">#A0A0A0</color>
+
+    <!-- Status Colors -->
+    <color name="widget_status_connected">#00BF63</color>
+    <color name="widget_status_disconnected">#98ADA2</color>
+    <color name="widget_status_blocked">#FF5252</color>
+
+    <!-- App Launcher Icon Background -->
+    <color name="bouncer_bg">#152A20</color>
+</resources>

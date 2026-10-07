@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">BT Bouncer</string>
+    <string name="widget_description">Quickly block or allow your top 5 Bluetooth devices directly from the home screen</string>
+</resources>
