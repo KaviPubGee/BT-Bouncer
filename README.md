@@ -36,7 +36,7 @@ Android only gives you two extremes:
 
 <div align="center">
 
-### [⬇ Download Latest APK](https://github.com/YOUR_USERNAME/BT-Bouncer/releases/latest)
+### [⬇ Download Latest APK](https://github.com/KaviPubGee/BT-Bouncer/releases/latest)
 
 </div>
 
